@@ -1,0 +1,364 @@
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  padding-top: 20px;
+}
+
+.about-hero {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(103, 199, 232, 0.2), transparent 30%),
+    linear-gradient(135deg, #e4f8ff 0%, #ffffff 58%, #f0faff 100%);
+}
+
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 76px);
+  min-height: 440px;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.about-hero-copy h1 {
+  max-width: 680px;
+}
+
+.about-hero-copy p {
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+
+.about-expertise-card,
+.about-principles-card,
+.about-service-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.about-expertise-card {
+  padding: clamp(24px, 4vw, 38px);
+}
+
+.about-card-label {
+  color: var(--sky2);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.about-expertise-card h2,
+.about-story-copy h2,
+.about-section-heading h2 {
+  margin: 10px 0 18px;
+  color: var(--navy);
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.16;
+  letter-spacing: -0.7px;
+}
+
+.about-expertise-card ul {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-expertise-card li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.about-expertise-card li svg {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 auto;
+  color: var(--sky2);
+}
+
+.about-story-section,
+.about-services-section {
+  padding: 76px 0;
+}
+
+.about-story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: clamp(32px, 6vw, 76px);
+  align-items: center;
+}
+
+.about-story-copy h2 {
+  max-width: 640px;
+}
+
+.about-story-copy p,
+.about-section-heading p {
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.about-principles-card {
+  display: grid;
+  gap: 24px;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.about-principle {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.about-principle-icon,
+.about-service-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #e8f8fd;
+  color: var(--sky2);
+}
+
+.about-principle-icon svg,
+.about-service-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.about-principle h3,
+.about-service-card h3 {
+  margin: 0 0 5px;
+  color: var(--navy);
+  font-size: 18px;
+}
+
+.about-principle p,
+.about-service-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.about-services-section {
+  background: #eff8fc;
+}
+
+.about-section-heading {
+  max-width: 680px;
+  margin-bottom: 30px;
+}
+
+.about-section-heading h2 {
+  margin-bottom: 10px;
+}
+
+.about-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.about-service-card {
+  min-height: 210px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(16, 45, 79, 0.14);
+}
+
+.about-service-card h3 {
+  margin-top: 18px;
+}
+
+.about-team-section {
+  scroll-margin-top: 96px;
+  padding: 48px 0 64px;
+  background: linear-gradient(180deg, #effaff 0%, #f7fbfd 100%);
+}
+
+.about-team-heading {
+  max-width: 680px;
+}
+
+.about-team-heading h2 {
+  margin: 8px 0;
+  color: var(--navy);
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.15;
+}
+
+.about-team-heading p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: white;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.team-avatar {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--sky), var(--sky2));
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.team-card h3 {
+  margin: 18px 0 8px;
+  font-size: 24px;
+  color: var(--navy);
+}
+
+.team-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.team-card span {
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--sky2);
+  font-weight: 800;
+}
+
+.bio {
+  margin-top: 26px;
+  padding: 26px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.bio h2 {
+  margin: 10px 0;
+  color: var(--navy);
+}
+
+.team-detail-wrap {
+  padding-top: 12px;
+}
+
+.team-detail-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 26px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.team-avatar.large {
+  width: 160px;
+  height: 160px;
+  border-radius: 24px;
+  font-size: 56px;
+}
+
+.team-role {
+  margin-top: 0;
+  color: var(--sky2);
+  font-weight: 700;
+}
+
+.crumb {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--sky2);
+  font-weight: 700;
+}
+
+.team-hero .page-hero {
+  padding-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .team-detail-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .team-avatar.large {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-hero-grid,
+  .about-story-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero-grid {
+    min-height: 0;
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+
+  .about-services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-story-section,
+  .about-services-section {
+    padding: 56px 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-expertise-card,
+  .about-principles-card,
+  .about-service-card {
+    border-radius: 18px;
+  }
+}
