@@ -10,6 +10,7 @@ export const EDITABLE_PAGES = [
   { id: "home", name: "Home page" },
   { id: "about", name: "About page" },
   { id: "services", name: "Services page" },
+  { id: "arjun", name: "Arjun page" },
   { id: "service-detail", name: "Service detail template" },
   { id: "knowledge", name: "Knowledge Bank" },
   { id: "team-detail", name: "Team profile template" },

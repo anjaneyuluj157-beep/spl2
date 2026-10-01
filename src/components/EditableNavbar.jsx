@@ -23,10 +23,18 @@ export default function EditableNavbar({ className, onClick, children }) {
     return <nav className={className} onClick={onClick}>{children}</nav>;
   }
 
+  const safeNavbarHtml = sanitizePageHtml(override.html);
+  const arjunHrefPattern = /href\s*=\s*["']\/arjun(?:[/?#][^"']*)?["']/i;
+  const hasArjunLink = arjunHrefPattern.test(safeNavbarHtml);
+  const arjunWasDeclared = arjunHrefPattern.test(override.html);
+  const navbarHtml = hasArjunLink || arjunWasDeclared
+    ? safeNavbarHtml
+    : `${safeNavbarHtml}<a href="/arjun">Arjun</a>`;
+
   return (
     <>
       {override.css && <style>{scopePageCss(override.css)}</style>}
-      <nav className={`${className || ""} custom-site-page custom-site-navbar`} onClick={onClick} dangerouslySetInnerHTML={{ __html: sanitizePageHtml(override.html) }} />
+      <nav className={`${className || ""} custom-site-page custom-site-navbar`} onClick={onClick} dangerouslySetInnerHTML={{ __html: navbarHtml }} />
     </>
   );
 }

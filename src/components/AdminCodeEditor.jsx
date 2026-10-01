@@ -26,6 +26,7 @@ const PAGE_SOURCE_PATHS = {
   home: "/",
   about: "/about",
   services: "/services",
+  arjun: "/arjun",
   "service-detail": "/services/registrations",
   knowledge: "/knowledge-bank",
   "team-detail": "/team/ca-prudhvi-raju-addala",
@@ -94,7 +95,7 @@ export default function AdminCodeEditor() {
   const [formatting, setFormatting] = useState(false);
   const [publishDialogOpen, setPublishDialogOpen] = useState(false);
   const [githubToken, setGithubToken] = useState("");
-  const [githubRepository, setGithubRepository] = useState("Arjun029/spl2");
+  const [githubRepository, setGithubRepository] = useState("anjaneyuluj157-beep/spl2");
   const [githubBranch, setGithubBranch] = useState("main");
   const [publishing, setPublishing] = useState(false);
   const [isLoadingExisting, setIsLoadingExisting] = useState(
@@ -107,6 +108,12 @@ export default function AdminCodeEditor() {
     () => makePreviewDocument(content.html, content.css, theme),
     [content.html, content.css, theme],
   );
+
+  function closePublishDialog() {
+    if (publishing) return;
+    setGithubToken("");
+    setPublishDialogOpen(false);
+  }
 
   function changePage(nextPageId) {
     setPageId(nextPageId);
@@ -214,9 +221,10 @@ export default function AdminCodeEditor() {
 
   async function publishToGithub(event) {
     event.preventDefault();
-    const [owner, repository] = githubRepository.trim().split("/");
-    if (!owner || !repository || !githubToken.trim() || !githubBranch.trim()) {
-      setMessage("Enter the GitHub repository, branch, and a GitHub token with repository contents access.");
+    const repositoryParts = githubRepository.trim().replace(/^https:\/\/github\.com\//i, "").replace(/\.git$/i, "").split("/");
+    const [owner, repository] = repositoryParts;
+    if (repositoryParts.length !== 2 || !owner || !repository || !githubToken.trim() || !githubBranch.trim()) {
+      setMessage("Enter a repository as owner/repository, its branch, and a GitHub token with Contents read/write access.");
       return;
     }
 
@@ -329,17 +337,17 @@ export default function AdminCodeEditor() {
       </div>
       <div className="admin-code-footnote">Existing page markup and relevant CSS load automatically. Save to replace the selected page content; restore anytime. Service detail and Team profile edits apply to their shared templates.</div>
 
-      {publishDialogOpen && <div className="admin-publish-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !publishing) setPublishDialogOpen(false); }}>
+      {publishDialogOpen && <div className="admin-publish-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closePublishDialog(); }}>
         <form className="admin-publish-dialog" onSubmit={publishToGithub}>
-          <div className="admin-publish-dialog-heading"><span className="admin-publish-icon"><GitBranch size={20} /></span><button type="button" aria-label="Close publish dialog" onClick={() => setPublishDialogOpen(false)}>×</button></div>
+          <div className="admin-publish-dialog-heading"><span className="admin-publish-icon"><GitBranch size={20} /></span><button type="button" aria-label="Close publish dialog" onClick={closePublishDialog} disabled={publishing}>×</button></div>
           <span className="admin-eyebrow">PUBLISH WEBSITE CHANGES</span>
           <h2>Push page edits to GitHub</h2>
-          <p>Creates a commit to <b>public/site-edits.json</b>. If Netlify deploys this branch, visitors receive the saved edits after its deploy completes.</p>
-          <label>Repository <input value={githubRepository} onChange={(event) => setGithubRepository(event.target.value)} placeholder="owner/repository" required /></label>
-          <label>Branch <input value={githubBranch} onChange={(event) => setGithubBranch(event.target.value)} placeholder="main" required /></label>
-          <label>GitHub token <input type="password" autoComplete="off" value={githubToken} onChange={(event) => setGithubToken(event.target.value)} placeholder="Fine-grained token with Contents: read/write" required /></label>
-          <small className="admin-token-note">Token is used for this request only and is not saved to browser storage. Never paste a token into the code editor.</small>
-          <div className="admin-publish-dialog-actions"><button type="button" className="admin-code-secondary" onClick={() => setPublishDialogOpen(false)} disabled={publishing}>Cancel</button><button type="submit" className="admin-publish-button" disabled={publishing}><GitBranch size={15} /> {publishing ? "Pushing commit…" : "Commit to GitHub"}</button></div>
+          <p>This creates a commit that updates <b>public/site-edits.json</b> on your chosen branch. Netlify publishes it for visitors if that branch is connected to an active deploy.</p>
+          <label htmlFor="publish-repository">GitHub repository <span className="admin-publish-field-hint">Owner and repository name</span><input id="publish-repository" value={githubRepository} onChange={(event) => setGithubRepository(event.target.value)} placeholder="your-account/your-repository" autoComplete="off" spellCheck="false" required /></label>
+          <label htmlFor="publish-branch">Target branch <span className="admin-publish-field-hint">The branch Netlify deploys</span><input id="publish-branch" value={githubBranch} onChange={(event) => setGithubBranch(event.target.value)} placeholder="main" autoComplete="off" spellCheck="false" required /></label>
+          <label htmlFor="publish-token">Fine-grained personal access token <span className="admin-publish-field-hint">Select this repository and grant Contents: Read and write. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">Create a token on GitHub ↗</a></span><input id="publish-token" type="password" autoComplete="new-password" value={githubToken} onChange={(event) => setGithubToken(event.target.value)} placeholder="github_pat_…" required /></label>
+          <small className="admin-token-note">The token is sent directly to GitHub for this publish action and is not saved in local storage. Do not share it or paste it into the page editor.</small>
+          <div className="admin-publish-dialog-actions"><button type="button" className="admin-code-secondary" onClick={closePublishDialog} disabled={publishing}>Cancel</button><button type="submit" className="admin-publish-button" disabled={publishing}><GitBranch size={15} /> {publishing ? "Pushing commit…" : "Commit to GitHub"}</button></div>
         </form>
       </div>}
     </div>

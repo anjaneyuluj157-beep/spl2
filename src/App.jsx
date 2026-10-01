@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
 import Admin from "./pages/Admin";
+import Arjun from "./pages/Arjun";
 import { loadPublishedPageOverrides } from "./data/pageOverrides";
 import {
   About,
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/" element={<EditablePage pageId="home"><Home /></EditablePage>} />
         <Route path="/about" element={<EditablePage pageId="about"><About /></EditablePage>} />
         <Route path="/services" element={<EditablePage pageId="services"><Services /></EditablePage>} />
+        <Route path="/arjun" element={<EditablePage pageId="arjun"><Arjun /></EditablePage>} />
         <Route path="/services/:slug" element={<EditablePage pageId="service-detail"><ServiceDetail /></EditablePage>} />
         <Route path="/knowledge-bank" element={<EditablePage pageId="knowledge"><Knowledge /></EditablePage>} />
         {/* <Route path="/gallery" element={<Gallery />} /> */}
