@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -8,12 +8,25 @@ import {
   Clock3,
 } from "lucide-react";
 import { services, otherServices } from "../data/services";
+import { getSiteLayout, SITE_LAYOUT_EVENT } from "../data/siteLayout";
 
 
 export default function Home() {
+  const [siteLayout, setSiteLayout] = useState(getSiteLayout);
+
+  useEffect(() => {
+    const syncLayout = () => setSiteLayout(getSiteLayout());
+    window.addEventListener(SITE_LAYOUT_EVENT, syncLayout);
+    window.addEventListener("storage", syncLayout);
+    return () => {
+      window.removeEventListener(SITE_LAYOUT_EVENT, syncLayout);
+      window.removeEventListener("storage", syncLayout);
+    };
+  }, []);
+
   return (
     <>
-      <section className="hero">
+      <section className={`hero hero--${siteLayout}`}>
         <div className="container hero-grid">
           <div>
             <span className="kicker">SPL CORPORATE SERVICES</span>

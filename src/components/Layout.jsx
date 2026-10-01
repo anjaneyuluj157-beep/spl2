@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
+import EditableNavbar from "./EditableNavbar";
+import ThemeToggle from "./ThemeToggle";
 export default function Layout() {
   const [open, setOpen] = useState(false);
   return (
@@ -23,13 +25,14 @@ export default function Layout() {
               SPL Corporate Services<small>Tax • Accounting • Advisory</small>
             </span>
           </Link>
-          <nav className={open ? "open" : ""} onClick={() => setOpen(false)}>
+          <EditableNavbar className={open ? "open" : ""} onClick={() => setOpen(false)}>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/services">Services</NavLink>
             {/* <NavLink to="/knowledge-bank">Knowledge Bank</NavLink> */}
             <NavLink className="nav-cta" to="/contact">Contact Us</NavLink>
-          </nav>
+          </EditableNavbar>
+          <ThemeToggle className="theme-toggle-public" />
           <button className="menu" onClick={() => setOpen(!open)}>
             {open ? <X /> : <Menu />}
           </button>
