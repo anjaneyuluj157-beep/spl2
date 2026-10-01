@@ -1,13 +1,54 @@
-import React from "react";
-import { useForm, ValidationError } from "@formspree/react";
+import React, { useState } from "react";
 import { services, otherServices } from "../data/services";
 
-const FORMSPREE_FORM_ID = "xppwjgar";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
 export default function EnquiryForm({ defaultService = "" }) {
-  const [state, handleSubmit] = useForm(FORMSPREE_FORM_ID);
+  const [submitting, setSubmitting] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [error, setError] = useState("");
 
-  if (state.succeeded) {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setSubmitting(true);
+    setError("");
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setError("The enquiry form is not configured yet. Please contact us by phone or email.");
+      setSubmitting(false);
+      return;
+    }
+
+    const formData = new FormData(event.currentTarget);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("subject", "New enquiry — SPL Corporate Services");
+    formData.append("from_name", "SPL Corporate Services Website");
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "We couldn't send your enquiry. Please try again.");
+      }
+
+      setSucceeded(true);
+    } catch (submissionError) {
+      setError(
+        submissionError instanceof TypeError
+          ? "We couldn't connect to the enquiry service. Check your internet connection and try again."
+          : submissionError.message,
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (succeeded) {
     return (
       <div className="success-box" role="status" aria-live="polite">
         <div className="success-icon">✓</div>
@@ -71,14 +112,10 @@ export default function EnquiryForm({ defaultService = "" }) {
         </label>
       </div>
 
-      <ValidationError prefix="Name" field="name" errors={state.errors} />
-      <ValidationError prefix="Phone" field="phone" errors={state.errors} />
-      <ValidationError prefix="Email" field="email" errors={state.errors} />
-      <ValidationError prefix="Service" field="service" errors={state.errors} />
-      <ValidationError prefix="Message" field="message" errors={state.errors} />
+      {error && <p className="form-note" role="alert">{error}</p>}
 
-      <button className="btn primary" type="submit" disabled={state.submitting}>
-        {state.submitting ? "Sending..." : "Send Enquiry →"}
+      <button className="btn primary" type="submit" disabled={submitting}>
+        {submitting ? "Sending..." : "Send Enquiry →"}
       </button>
     </form>
   );

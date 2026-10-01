@@ -27,7 +27,7 @@ export default function Layout() {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/services">Services</NavLink>
-            <NavLink to="/knowledge-bank">Knowledge Bank</NavLink>
+            {/* <NavLink to="/knowledge-bank">Knowledge Bank</NavLink> */}
             <NavLink className="nav-cta" to="/contact">Contact Us</NavLink>
           </nav>
           <button className="menu" onClick={() => setOpen(!open)}>
